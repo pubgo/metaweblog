@@ -1,0 +1,2 @@
+# metaweblog
+go metaweblog sdk
