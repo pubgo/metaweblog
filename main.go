@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/mattn/go-xmlrpc"
 	"github.com/pubgo/g/xerror"
+	"github.com/pubgo/metaweblog/cmds"
 )
 
 func main() {
@@ -20,9 +21,8 @@ func main() {
 			fmt.Println(k, _k, _v)
 		}
 	}
-	//cmds.Execute()
+	cmds.Execute()
 }
-
 
 // http://rpc.cnblogs.com/metaweblog/bergus#FileData
 // metaWeblog.editPost
