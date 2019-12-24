@@ -16,6 +16,7 @@ type IMetaweblogAPI interface {
 	WpNewCategory(blogId string, category models.WpCategory) (int, error)
 	Tags(blogId string) (map[string]string, error)
 	GetPostList(blogId string) ([]models.PostLink, error)
+	Link2PostId(link string) (string, error)
 }
 
 type IMetaweblog interface {

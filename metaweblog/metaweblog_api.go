@@ -31,6 +31,29 @@ type metaweblogImpl struct {
 	password string
 }
 
+func (t *metaweblogImpl) Link2PostId(link string) (postId string, err error) {
+	defer xerror.RespErr(&err)
+
+	res := xerror.PanicErr(http.Get(link)).(*http.Response)
+	defer res.Body.Close()
+	xerror.PanicT(res.StatusCode/100 != 2, "status code error: %d %s", res.StatusCode, res.Status)
+
+	// Load the HTML document
+	doc := xerror.PanicErr(goquery.NewDocumentFromReader(res.Body)).(*goquery.Document)
+	doc.Find("#topics .postDesc a").Each(func(i int, sec *goquery.Selection) {
+		val, exists := sec.Attr("href")
+		if !exists {
+			return
+		}
+
+		if strings.Contains(val, "postid") {
+			_val := strings.Split(val, "postid=")
+			postId = _val[len(_val)-1]
+		}
+	})
+	return
+}
+
 func (t *metaweblogImpl) Tags(blogId string) (data map[string]string, err error) {
 	defer xerror.RespErr(&err)
 
